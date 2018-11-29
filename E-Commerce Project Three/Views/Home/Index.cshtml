@@ -1,0 +1,33 @@
+﻿@model List<E_Commerce_Project_Three.Models.Transaction>
+@{
+    ViewBag.Title = "Home Page";
+    ViewBag.Index = true;
+}
+
+<div class="container">
+    <div class="row center-block">
+    @for (int i = 0; i < Model.Count; i++)
+    {
+        <div class="col-sm-6 col-xs-12">
+            <div class="row">
+                <div class="col-sm-6 col-xs-12">
+                    <img class="img-responsive" src="@Model[i].DesktopWallpaper.DisplayThumbnail" alt="@Model[i].DesktopWallpaper.Name" />
+                </div>
+                <div class="col-sm-6 col-xs-12">
+                    <h5>專輯名稱：@Model[i].DesktopWallpaper.Name</h5>
+                    <p>商品描述：@Model[i].DesktopWallpaper.Description</p>
+                    <p>售價：@(Model[i].DesktopWallpaper.Price)元</p>
+                    @if (Model[i].Purchased)
+                    {
+                        <a class="btn btn-success" href="@Url.Action("PaymentResult","Home",new { out_trade_no = @Model[i].OutTradeNo })">查看桌布</a>
+                    }
+                    else
+                    {
+                        <a class="btn btn-primary" href="@Model[i].PaymentUrl">立即購買</a>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+    </div>
+</div>
