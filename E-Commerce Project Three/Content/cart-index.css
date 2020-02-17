@@ -1,0 +1,12 @@
+﻿.table .vertical-tr td{
+    vertical-align:middle;
+}
+
+.paypal-btn-container{
+    border:0;
+    padding:0;
+}
+
+.paypal-btn-container {
+    max-width: 301px;
+}

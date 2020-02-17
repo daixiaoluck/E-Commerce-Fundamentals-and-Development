@@ -1,0 +1,65 @@
+﻿@model E_Commerce_Project_Three.Models.CartIndexViewModel
+@using E_Commerce_Project_Three.Models;
+
+@{
+    ViewBag.Title = "Index";
+    DesktopWallpaper desktopwallpaperMetaData = Model.DesktopWallpapers.FirstOrDefault();
+}
+
+@section styles{
+    <link rel="stylesheet" href="~/Content/cart-index.css" />
+}
+
+<h2>Index</h2>
+
+<div>
+    <h4>Your shopping cart's internal details:</h4>
+    @if (Model.TotalCount == 0)
+    {
+        <hr />
+        <p class="h3">You shopping cart is empty.</p>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table">
+                <tr>
+                    <th>Products:</th>
+                    <th>@Html.DisplayNameFor(m => desktopwallpaperMetaData.Price):</th>
+                    <th class="text-center">Operations:</th>
+                </tr>
+                @foreach (var desktopWallpaper in Model.DesktopWallpapers)
+                {
+                    <tr class="vertical-tr">
+                        <td>
+                            <img src="@desktopWallpaper.DisplayThumbnail" alt="Broken link." />
+                        </td>
+                        <td>
+                            @*只包括数字*@
+                            <span class="j-price">
+                                @Html.DisplayTextFor(m => desktopWallpaper.Price)
+                            </span>
+                        </td>
+                        <td class="text-center">
+                            @Html.ActionLink("Delete", "Delete", new { id = desktopWallpaper.DesktopWallpaperId }, new { @class = "btn btn-danger" })
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+
+        using (Html.BeginForm("GoToPay", "Cart", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            <div class="text-center h2">
+                <strong>Total:</strong>
+                <span>@Model.TotalPrice HKD</span>
+                <input type="hidden" name="totalPrice" value="@Model.TotalPrice" />
+            </div>
+            <div class="text-center">
+                <button class="btn btn-primary btn-lg">Confirm</button>
+            </div>
+        }
+
+    }
+</div>

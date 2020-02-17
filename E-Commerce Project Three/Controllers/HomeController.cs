@@ -5,82 +5,62 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using E_Commerce_Project_Three.Models;
 using Microsoft.AspNet.Identity;
 
 namespace E_Commerce_Project_Three.Controllers
 {
     public class HomeController : Controller
     {
-        public ApplicationDbContext context = new ApplicationDbContext();
+        public ApplicationDbContext _context = new ApplicationDbContext();
         [Authorize]
         public ActionResult Index()
         {
-            var desktopWallpapers = context.DesktopWallpapers.ToList();
+            List<DesktopWallpaper> desktopWallpapers = _context.DesktopWallpapers.ToList();
+            List<HomeIndexViewModel> homeIndexViewModels = new List<HomeIndexViewModel>();
             string currentUserId = User.Identity.GetUserId();
-            var countQuery = (from t in context.Transactions
-                              where t.AId == currentUserId
-                              select t).Count();
-
-            if(countQuery == 0)
+            foreach (var desktopWallpaper in desktopWallpapers)
             {
-                foreach (var item in desktopWallpapers)
+                HomeIndexViewModel homeIndexViewModel = new HomeIndexViewModel{
+                    DesktopWallpaper = desktopWallpaper
+                };
+                // select子句的内容只是为了方便调试，对业务逻辑没有意义
+                var query = from transaction in _context.Transactions
+                            join transactionDetails in _context.TransactionDetails
+                            on transaction.TransactionId equals transactionDetails.TransactionId
+                            where transactionDetails.UserId == currentUserId && transactionDetails.DesktopWallpaperId == desktopWallpaper.DesktopWallpaperId && transaction.Completeness == true
+                            select new { transaction.TransactionId, transaction.Completeness, transactionDetails.DesktopWallpaperId, transactionDetails.UserId };
+                if(query.Count() > 0)
                 {
-                    var transaction = new Transaction
-                    {
-                        DId = item.DesktopWallpaperId,
-                        AId = currentUserId,
-                        OutTradeNo = currentUserId + item.DesktopWallpaperId
-                    };
-                    context.Transactions.Add(transaction);
+                    homeIndexViewModel.Purchased = true;
                 }
-                context.SaveChanges();
+                homeIndexViewModels.Add(homeIndexViewModel);
             }
-
-            var transactionsQuery = from t in context.Transactions
-                                    where t.AId == currentUserId
-                                    select t;
-            return View(transactionsQuery.ToList());
-        }
-
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
+            return View(homeIndexViewModels);
         }
 
         [Authorize]
-        public ActionResult PaymentResult(string out_trade_no)
+        public ActionResult ShowItem(int desktopWallpaperId)
         {
             string currentUserId = User.Identity.GetUserId();
-            Transaction transaction;
-
-            if (out_trade_no == null)
+            // select子句的内容只是为了方便调试，不管select什么，都和业务逻辑无关。业务逻辑只看重聚合函数的结果。
+            int criterion = (from transaction in _context.Transactions
+                             join transactionDetails in _context.TransactionDetails
+                             on transaction.TransactionId equals transactionDetails.TransactionId
+                             where transactionDetails.UserId == currentUserId && transactionDetails.DesktopWallpaperId == desktopWallpaperId && transaction.Completeness == true
+                             select transactionDetails).Count();
+            if(criterion == 0)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            var transactionQuery = from t in context.Transactions
-                              where t.OutTradeNo == out_trade_no && t.AId == currentUserId
-                              select t;
-            if(transactionQuery.Count() == 0)
-            {
-                return HttpNotFound();
+                
+                return View("Error", new HandleErrorInfo( new Exception("You have not bought this item yet."), 
+                    ControllerContext.RouteData.Values["controller"].ToString(),
+                    ControllerContext.RouteData.Values["action"].ToString() )
+                );
             }
             else
             {
-                transaction = transactionQuery.First();
-                transaction.Purchased = true;
-                context.SaveChanges();
+                DesktopWallpaper desktopWallpaper = _context.DesktopWallpapers.Where(d => d.DesktopWallpaperId == desktopWallpaperId).First();
+                return View(desktopWallpaper);
             }
-            return View(transaction.DesktopWallpaper);
         }
     }
 }

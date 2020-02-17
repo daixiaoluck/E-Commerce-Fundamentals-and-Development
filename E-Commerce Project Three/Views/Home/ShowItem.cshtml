@@ -1,0 +1,13 @@
+﻿@model E_Commerce_Project_Three.Models.DesktopWallpaper
+
+@{
+    ViewBag.Title = "ShowItem";
+}
+
+@section styles{
+    <link rel="stylesheet" href="~/Content/home-showitem.css" />
+}
+
+<a href="@Model.DisplayOriginalImage" class="original-image-container" target="_blank">
+    <img src="@Model.DisplayOriginalImage" alt="@Model.Name" class="img-responsive" />
+</a>

@@ -14,43 +14,43 @@ namespace E_Commerce_Project_Three.Data
             context.DesktopWallpapers.Add(
                 new DesktopWallpaper
                 {
-                    Name = "夜景桌布",
-                    Description = "從西邊俯瞰維多利亞港",
+                    Name = "First",
+                    Description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas quod sit sequi debitis, accusamus corporis, vero eligendi ducimus molestiae! Vel nam laborum, rem aperiam? Vitae labore provident reprehenderit tempora quod.",
                     Price = 0.01m
                 });
             context.DesktopWallpapers.Add(
                 new DesktopWallpaper
                 {
-                    Name = "白晝桌布",
-                    Description = "從太平山俯瞰維多利亞港",
+                    Name = "Second",
+                    Description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas quod sit sequi debitis, accusamus corporis, vero eligendi ducimus molestiae! Vel nam laborum, rem aperiam? Vitae labore provident reprehenderit tempora quod.",
                     Price = 0.01m
                 });
             context.DesktopWallpapers.Add(
                 new DesktopWallpaper
                 {
-                    Name = "白晝桌布",
-                    Description = "沐浴在朝霞中的維多利亞港",
+                    Name = "Third",
+                    Description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas quod sit sequi debitis, accusamus corporis, vero eligendi ducimus molestiae! Vel nam laborum, rem aperiam? Vitae labore provident reprehenderit tempora quod.",
                     Price = 0.01m
                 });
             context.DesktopWallpapers.Add(
                 new DesktopWallpaper
                 {
-                    Name = "夜景桌布",
-                    Description = "日落時分的維多利亞港",
+                    Name = "Fourth",
+                    Description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas quod sit sequi debitis, accusamus corporis, vero eligendi ducimus molestiae! Vel nam laborum, rem aperiam? Vitae labore provident reprehenderit tempora quod.",
                     Price = 0.01m
                 });
             context.DesktopWallpapers.Add(
                 new DesktopWallpaper
                 {
-                    Name = "白晝桌布",
-                    Description = "沐浴在晚霞中的維多利亞港",
+                    Name = "Fifth",
+                    Description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas quod sit sequi debitis, accusamus corporis, vero eligendi ducimus molestiae! Vel nam laborum, rem aperiam? Vitae labore provident reprehenderit tempora quod.",
                     Price = 0.01m
                 });
             context.DesktopWallpapers.Add(
                 new DesktopWallpaper
                 {
-                    Name = "夜景桌布",
-                    Description = "散發着朦朧紫色光芒的維多利亞港",
+                    Name = "Sixth",
+                    Description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas quod sit sequi debitis, accusamus corporis, vero eligendi ducimus molestiae! Vel nam laborum, rem aperiam? Vitae labore provident reprehenderit tempora quod.",
                     Price = 0.01m
                 });
             context.SaveChanges();

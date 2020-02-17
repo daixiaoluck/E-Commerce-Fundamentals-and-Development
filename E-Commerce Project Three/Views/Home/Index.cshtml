@@ -1,33 +1,43 @@
-﻿@model List<E_Commerce_Project_Three.Models.Transaction>
+﻿@model List<E_Commerce_Project_Three.Models.HomeIndexViewModel>
 @{
     ViewBag.Title = "Home Page";
-    ViewBag.Index = true;
 }
 
 <div class="container">
     <div class="row center-block">
-    @for (int i = 0; i < Model.Count; i++)
-    {
-        <div class="col-sm-6 col-xs-12">
-            <div class="row">
-                <div class="col-sm-6 col-xs-12">
-                    <img class="img-responsive" src="@Model[i].DesktopWallpaper.DisplayThumbnail" alt="@Model[i].DesktopWallpaper.Name" />
-                </div>
-                <div class="col-sm-6 col-xs-12">
-                    <h5>專輯名稱：@Model[i].DesktopWallpaper.Name</h5>
-                    <p>商品描述：@Model[i].DesktopWallpaper.Description</p>
-                    <p>售價：@(Model[i].DesktopWallpaper.Price)元</p>
-                    @if (Model[i].Purchased)
-                    {
-                        <a class="btn btn-success" href="@Url.Action("PaymentResult","Home",new { out_trade_no = @Model[i].OutTradeNo })">查看桌布</a>
-                    }
-                    else
-                    {
-                        <a class="btn btn-primary" href="@Model[i].PaymentUrl">立即購買</a>
-                    }
+        @for (int i = 0; i < Model.Count; i++)
+        {
+            <div class="col-sm-6 col-xs-12">
+                <div class="row">
+                    <div class="col-sm-6 col-xs-12">
+                        <img class="img-responsive" src="@Model[i].DesktopWallpaper.DisplayThumbnail" alt="@Model[i].DesktopWallpaper.Name" />
+                    </div>
+                    <div class="col-sm-6 col-xs-12">
+                        <h5><strong>Name：</strong>@Model[i].DesktopWallpaper.Name</h5>
+                        <p><strong>Description：</strong>@Model[i].DesktopWallpaper.Description</p>
+                        <p><strong>Price：</strong>@(Model[i].DesktopWallpaper.Price) HKD</p>
+                        @if (Model[i].Purchased)
+                        {
+                            //第三个参数是routeValue
+                            @Html.ActionLink("View your bought item", "ShowItem", new { desktopWallpaperId = Model[i].DesktopWallpaper.DesktopWallpaperId }, new { @class = "btn btn-success" });
+                        }
+                        else
+                        {
+                        <button class="btn btn-primary j-add" data-desktop-wallpaper-id="@Model[i].DesktopWallpaper.DesktopWallpaperId">
+                            Add to Chart
+                        </button>
+                        }
+                    </div>
                 </div>
             </div>
-        </div>
-    }
+        }
     </div>
 </div>
+
+@section styles{
+    <link rel="stylesheet" href="~/Content/home-index.css" />
+}
+
+@section scripts{
+    <script src="~/Scripts/home-index.js"></script>
+}

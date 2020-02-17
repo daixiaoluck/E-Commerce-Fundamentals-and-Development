@@ -1,0 +1,30 @@
+﻿@model E_Commerce_Project_Three.Models.CartGoToPayViewModel
+
+@{
+    ViewBag.Title = "GoToPay";
+}
+
+<h1>Go to pay</h1>
+<form class="container" action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post">
+    <input type="hidden" name="cmd" value="_cart">
+    <input type="hidden" name="upload" value="1">
+    <input type="hidden" name="business" value="sb-o6ayl797097@business.example.com">
+    <input type="hidden" name="no_shipping" value="1">
+    <input type="hidden" name="currency_code" value="HKD" />
+    <input type="hidden" name="invoice" value="@Model.TransactionId" />
+    @for (var i = 0; i < Model.DesktopWallpapers.Count; i++)
+    {
+        int temp = i + 1;
+        <input type="hidden" name="item_name_@temp " value="@Model.DesktopWallpapers[i].Name" />
+        <input type="hidden" name="amount_@temp" value="@Model.DesktopWallpapers[i].Price" />
+    }
+    <div class="text-center h2">
+        <span>You need to pay:</span>
+        <strong>@Model.TotalPrice HKD</strong>
+    </div>
+    <div class="text-center">
+        <button type="submit" class="paypal-btn-container">
+            <img src="~/Images/paypalbtn.png" class="img-responsive" />
+        </button>
+    </div>
+</form>

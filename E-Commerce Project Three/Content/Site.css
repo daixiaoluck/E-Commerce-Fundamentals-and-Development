@@ -22,3 +22,15 @@ select,
 textarea {
     max-width: 280px;
 }
+
+/*给购物车加上右上角的红色亮点，加在a标签上*/
+.not-empty::after {
+    content:"";
+    position: absolute;
+    top: 12px;
+    right: 7px;
+    width: 6px;
+    height: 6px;
+    background: red;
+    border-radius:50%;
+}

@@ -34,5 +34,6 @@ namespace E_Commerce_Project_Three.Models
 
         public DbSet<DesktopWallpaper> DesktopWallpapers { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
+        public DbSet<TransactionDetails> TransactionDetails { get; set; }
     }
 }
